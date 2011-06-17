@@ -1,0 +1,47 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+	<display-name>allplay</display-name>
+
+	<servlet>
+		<servlet-name>poll</servlet-name>
+		<servlet-class>nl.q42.allplay.PollServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>reset</servlet-name>
+		<servlet-class>nl.q42.allplay.ResetServlet</servlet-class>
+	</servlet>
+	
+	<servlet>
+		<servlet-name>createplayer</servlet-name>
+		<servlet-class>nl.q42.allplay.CreatePlayerServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>move</servlet-name>
+		<servlet-class>nl.q42.allplay.MoveServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>poll</servlet-name>
+		<url-pattern>/poll</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>reset</servlet-name>
+		<url-pattern>/reset</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>createplayer</servlet-name>
+		<url-pattern>/createplayer</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>move</servlet-name>
+		<url-pattern>/move</url-pattern>
+	</servlet-mapping>
+</web-app>
