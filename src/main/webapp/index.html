@@ -8,80 +8,18 @@
 </head>
 <body>
 
-<div>
-	id: <span id="playerId"></span>
-</div>
 <div id="dpad">
 	<span class="up">⇧</span>
 	<span class="right">⇨</span>
 	<span class="down">⇩</span>
 	<span class="left">⇦</span>
 </div>
-<div id="debug">
-	<button id="newPlayer" onclick="createPlayer()">New Player</button>
-	<button id="reset">Reset</button>
-</div>
+
+<button id="newPlayer" onclick="createPlayer()">New Player</button>
+
 
 <script src="js/jquery-1.6.1.min.js"></script>
-
-<script>
-var id = '';
-var lastDir = 0;
-var mouseDown = false;
-
-function createPlayer() {
-	$.post('createplayer', function(data) {
-		id = data.id;
-		$('#playerId').html(id);
-	});
-}
-
-function sendDirection(dir) {
-	if(lastDir == dir) return;
-	lastDir = dir;
-	$.post('move', {id: id, dir: dir});
-}
-
-function handleEvent(e) {
-	var offset = $('#dpad').offset();
-	var size = $('#dpad').width();
-	x = e.pageX - offset.left;
-	y = e.pageY - offset.top;
-	if(x > y) {
-		if(x + y < size) {
-			// up
-			sendDirection(1);
-		} else {
-			// right
-			sendDirection(2);
-		}
-	} else {
-		if(x + y > size) {
-			// down
-			sendDirection(3);
-		} else {
-			// left
-			sendDirection(4);
-		}
-	}
-}
-
-function init() {
-	$('#dpad').bind('mousedown', function(e) {
-		mouseDown = true;
-		handleEvent(e);
-	});
-	$('#dpad').bind('mousemove', function(e) {
-		if(mouseDown) handleEvent(e);
-	});
-	$('#dpad').bind('mouseup', function(e) {
-		mouseDown = false;
-	});
-	createPlayer();
-}
-
-init();
-</script>
+<script src="js/controller.js"></script>
 
 </body>
 </html>

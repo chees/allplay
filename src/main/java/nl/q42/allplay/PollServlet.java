@@ -16,6 +16,9 @@ public class PollServlet extends HttpServlet {
 		
 		State state = Game.getState();
 		String messages = state.getMessages();
+		
+		if(messages.equals("")) return;
+		
 		System.out.println(messages);
 		out.println(messages);
 	}

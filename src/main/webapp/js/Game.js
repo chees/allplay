@@ -32,12 +32,14 @@ Game.prototype.movePlayer = function(id, dir) {
 Game.prototype.pollServer = function() {
 	var _this = this;
 	$.get('poll', function(data) {
-		for (var i in data.messages) {
-			var msg = data.messages[i];
-			if (msg.action == 'createPlayer') {
-				_this.addEntity(new Player(_this, msg.id));
-			} else if (msg.action == 'move') {
-				_this.movePlayer(msg.id, msg.dir);
+		if(data != null) {
+			for (var i in data.messages) {
+				var msg = data.messages[i];
+				if (msg.action == 'createPlayer') {
+					_this.addEntity(new Player(_this, msg.id));
+				} else if (msg.action == 'move') {
+					_this.movePlayer(msg.id, msg.dir);
+				}
 			}
 		}
 		setTimeout(function(){ _this.pollServer(); }, 100);

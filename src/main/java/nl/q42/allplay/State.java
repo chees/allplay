@@ -22,6 +22,7 @@ public class State {
 	}
 	
 	public synchronized String getMessages() {
+		if(msgList.size() == 0) return "";
 		ObjectMapper mapper = new ObjectMapper();
 		String jsonString = "{}";
 		try {
