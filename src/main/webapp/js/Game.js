@@ -24,7 +24,7 @@ Game.prototype.movePlayer = function(id, dir) {
 	for (var i = 0; i < entitiesCount; i++) {
 		var player = this.entities[i]; 
 		if (player.id == id) {
-			player.direction = dir;
+			player.requestedDir = dir;
 		}
 	}
 };

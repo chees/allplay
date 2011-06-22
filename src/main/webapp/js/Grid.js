@@ -27,3 +27,9 @@ Grid.prototype.draw = function(ctx) {
 		}
 	}
 };
+
+Grid.prototype.coordsToGrid = function(x, y) {
+	var gridX = Math.floor((x - this.margin) / this.dotSpacing);
+	var gridY = Math.floor((y - this.margin) / this.dotSpacing);
+	return { x: gridX, y: gridY };
+};
