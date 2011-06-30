@@ -18,14 +18,16 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
 	var d = this.engine.clockTick * this.speed;
 	var gridPos = game.grid.coordsToGrid(this.x, this.y);
+	game.grid.eat(gridPos.x, gridPos.y);
 	
 	// TODO simplify and unduplicate this?
 	if(this.direction == 1) {
 		var newY = this.y - d;
 		var newGridY = game.grid.coordsToGrid(this.x, newY).y;
 		if(newGridY < gridPos.y) {
-			this.y = gridPos.y * game.grid.dotSpacing + game.grid.margin - 0.01;
+			this.y = gridPos.y * game.grid.dotSpacing + game.grid.margin; // - 0.01;
 			this.direction = this.requestedDir;
+			if(this.direction == 1) this.y -= 0.01;
 		} else {
 			this.y = newY;
 		}
@@ -39,7 +41,10 @@ Player.prototype.update = function() {
 		} else {
 			this.x = newX;
 		}
-		this.x = Math.min(this.x, game.grid.margin + game.grid.dotSpacing * (game.grid.dotsX - 1) - 0.01);
+		if(this.x > game.grid.maxX) {
+			this.x = game.grid.maxX;
+			this.direction = this.requestedDir;
+		}
 	} else if(this.direction == 3) {
 		var newY = this.y + d;
 		var newGridY = game.grid.coordsToGrid(this.x, newY).y;
@@ -49,13 +54,17 @@ Player.prototype.update = function() {
 		} else {
 			this.y = newY;
 		}
-		this.y = Math.min(this.y, game.grid.margin + game.grid.dotSpacing * (game.grid.dotsY - 1) - 0.01);
+		if(this.y > game.grid.maxY) {
+			this.y = game.grid.maxY;
+			this.direction = this.requestedDir;
+		}
 	} else if(this.direction == 4) {
 		var newX = this.x - d;
 		var newGridX = game.grid.coordsToGrid(newX, this.y).x;
 		if(newGridX < gridPos.x) {
-			this.x = gridPos.x * game.grid.dotSpacing + game.grid.margin - 0.01;
+			this.x = gridPos.x * game.grid.dotSpacing + game.grid.margin; // - 0.01;
 			this.direction = this.requestedDir;
+			if(this.direction == 4) this.x -= 0.01;
 		} else {
 			this.x = newX;
 		}

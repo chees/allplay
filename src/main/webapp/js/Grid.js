@@ -5,6 +5,8 @@ function Grid(engine) {
 	this.margin = 50;
 	this.dotsX = Math.floor((engine.ctx.canvas.width - 2*this.margin) / this.dotSpacing);
 	this.dotsY = Math.floor((engine.ctx.canvas.height - 2*this.margin) / this.dotSpacing);
+	this.maxX = this.margin + this.dotSpacing * (this.dotsX - 1);
+	this.maxY = this.margin + this.dotSpacing * (this.dotsY - 1);
 	
 	for(var x = 0; x < this.dotsX; x++) {
 		this.dots[x] = [];
@@ -33,3 +35,12 @@ Grid.prototype.coordsToGrid = function(x, y) {
 	var gridY = Math.floor((y - this.margin) / this.dotSpacing);
 	return { x: gridX, y: gridY };
 };
+
+Grid.prototype.eat = function(x, y) {
+	if(this.dots[x][y]) {
+		this.dots[x][y] = false;
+		return true;
+	}
+	return false;
+};
+
