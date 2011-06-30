@@ -18,7 +18,10 @@ Player.prototype.constructor = Player;
 Player.prototype.update = function() {
 	var d = this.engine.clockTick * this.speed;
 	var gridPos = game.grid.coordsToGrid(this.x, this.y);
-	game.grid.eat(gridPos.x, gridPos.y);
+	
+	if(game.grid.eat(gridPos.x, gridPos.y)) {
+		this.score++;
+	}
 	
 	// TODO simplify and unduplicate this?
 	if(this.direction == 1) {
@@ -77,7 +80,9 @@ Player.prototype.update = function() {
 Player.prototype.draw = function(ctx) {
 	ctx.beginPath();
 	ctx.fillStyle = 'rgb('+this.r+','+this.g+','+this.b+')';
-	ctx.arc(this.x, this.y, this.radius, 1, Math.PI*2-1, false);
+	ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
 	ctx.fill();
+	ctx.fillStyle = 'rgb(255, 255, 255)';
+	ctx.fillText(this.score, this.x-7, this.y+4);
 	Entity.prototype.draw.call(this, ctx);
 };

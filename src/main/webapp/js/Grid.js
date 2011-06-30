@@ -16,6 +16,12 @@ function Grid(engine) {
 	}
 }
 
+Grid.prototype.update = function() {
+	var x = Math.floor(Math.random() * this.dotsX);
+	var y = Math.floor(Math.random() * this.dotsY);
+	this.dots[x][y] = true;
+};
+
 Grid.prototype.draw = function(ctx) {
 	for(var x = 0; x < this.dotsX; x++) {
 		for(var y = 0; y < this.dotsY; y++) {

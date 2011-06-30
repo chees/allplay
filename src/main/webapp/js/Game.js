@@ -17,6 +17,7 @@ Game.prototype.draw = function() {
 
 Game.prototype.update = function() {
 	Engine.prototype.update.call(this);
+	this.grid.update();
 };
 
 Game.prototype.movePlayer = function(id, dir) {
