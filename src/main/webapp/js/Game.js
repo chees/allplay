@@ -42,6 +42,6 @@ Game.prototype.pollServer = function() {
 				}
 			}
 		}
-		setTimeout(function(){ _this.pollServer(); }, 100);
+		setTimeout(function(){ _this.pollServer(); }, 50);
 	});
 };

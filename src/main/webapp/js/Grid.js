@@ -3,8 +3,8 @@ function Grid(engine) {
 	this.dotRadius = 1;
 	this.dotSpacing = 20;
 	this.margin = 50;
-	this.dotsX = (engine.ctx.canvas.width - 2*this.margin) / this.dotSpacing;
-	this.dotsY = (engine.ctx.canvas.height - 2*this.margin) / this.dotSpacing;
+	this.dotsX = Math.floor((engine.ctx.canvas.width - 2*this.margin) / this.dotSpacing);
+	this.dotsY = Math.floor((engine.ctx.canvas.height - 2*this.margin) / this.dotSpacing);
 	
 	for(var x = 0; x < this.dotsX; x++) {
 		this.dots[x] = [];
