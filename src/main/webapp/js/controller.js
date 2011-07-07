@@ -10,8 +10,9 @@ function createPlayer() {
 }
 
 function sendDirection(dir) {
-	if(lastDir == dir) return;
+	if (lastDir == dir) return;
 	lastDir = dir;
+	// TODO cancel previous request? 
 	$.post('move', {id: id, dir: dir});
 }
 

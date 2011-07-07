@@ -130,7 +130,7 @@ Player.prototype.draw = function(ctx) {
 		ctx.fill();
 	}
 	// Score
-	ctx.fillStyle = 'rgb(255, 255, 255)';
-	ctx.fillText(this.score, this.x-7, this.y+4);
+	//ctx.fillStyle = 'rgb(255, 255, 255)';
+	//ctx.fillText(this.score, this.x-7, this.y+4);
 	Entity.prototype.draw.call(this, ctx);
 };

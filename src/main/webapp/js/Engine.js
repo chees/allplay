@@ -6,7 +6,6 @@ function Engine() {
 }
 
 Engine.prototype.init = function(ctx) {
-	console.log('initializing game');
 	this.ctx = ctx;
 	this.stats.domElement.style.position = 'absolute';
 	this.stats.domElement.style.left = '0px';
@@ -15,7 +14,6 @@ Engine.prototype.init = function(ctx) {
 };
 
 Engine.prototype.start = function() {
-	console.log('starting game');
 	this.lastUpdateTimestamp = Date.now();
 	var that = this;
 	(function gameLoop() {
