@@ -10,7 +10,8 @@ function Player(engine, id) {
 	this.r = Math.floor(Math.random()*256);
 	this.g = Math.floor(Math.random()*256);
 	this.b = Math.floor(Math.random()*256);
-	this.score = 0; // TODO
+	this.score = 0;
+	this.isSuper = false; // isSuper is true when the player ate a super dot
 }
 Player.prototype = new Entity();
 Player.prototype.constructor = Player;
@@ -19,8 +20,22 @@ Player.prototype.update = function() {
 	var d = this.engine.clockTick * this.speed;
 	var gridPos = game.grid.coordsToGrid(this.x, this.y);
 	
-	if(game.grid.eat(gridPos.x, gridPos.y)) {
-		this.score++;
+	var dotType = game.grid.eat(gridPos.x, gridPos.y);
+	if(dotType == 1) {
+		if(this.isSuper) {
+			this.score += 2;
+		} else {
+			this.score += 1;
+		}
+	} else if(dotType == 2) {
+		this.score += 10;
+		this.speed = 200;
+		this.isSuper = true;
+		var _this = this;
+		setTimeout(function() {
+			_this.isSuper = false;
+			_this.speed = 100;
+		}, 5000);
 	}
 	
 	// TODO simplify and unduplicate this?
@@ -79,9 +94,16 @@ Player.prototype.update = function() {
 
 Player.prototype.draw = function(ctx) {
 	ctx.beginPath();
-	ctx.fillStyle = 'rgb('+this.r+','+this.g+','+this.b+')';
-	ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
-	ctx.fill();
+	if(this.isSuper) {
+		ctx.strokeStyle = 'rgb('+this.r+','+this.g+','+this.b+')';
+		ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
+		ctx.stroke();
+	} else {
+		ctx.fillStyle = 'rgb('+this.r+','+this.g+','+this.b+')';
+		ctx.arc(this.x, this.y, this.radius, 0, Math.PI*2, false);
+		ctx.fill();
+	}
+	// Score
 	ctx.fillStyle = 'rgb(255, 255, 255)';
 	ctx.fillText(this.score, this.x-7, this.y+4);
 	Entity.prototype.draw.call(this, ctx);

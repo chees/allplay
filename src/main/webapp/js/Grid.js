@@ -14,6 +14,9 @@ function Grid(engine) {
 			this.dots[x][y] = true;
 		}
 	}
+	
+	this.superDotX = Math.floor(this.dotsX/2);
+	this.superDotY = Math.floor(this.dotsY/2);
 }
 
 Grid.prototype.update = function() {
@@ -34,6 +37,14 @@ Grid.prototype.draw = function(ctx) {
 			ctx.fill();
 		}
 	}
+	// SuperDot:
+	if(this.superDotX != null) {
+		ctx.beginPath();
+		ctx.fillStyle = 'rgb(256, 0, 0)';
+		ctx.arc(this.margin + this.superDotX * this.dotSpacing, 
+				this.margin + this.superDotY * this.dotSpacing, this.dotRadius*4, 0, Math.PI*2, true);
+		ctx.fill();
+	}
 };
 
 Grid.prototype.coordsToGrid = function(x, y) {
@@ -43,10 +54,21 @@ Grid.prototype.coordsToGrid = function(x, y) {
 };
 
 Grid.prototype.eat = function(x, y) {
+	if(this.superDotX == x && this.superDotY == y) {
+		this.superDotX = null;
+		this.superDotY = null;
+		this.dots[x][y] = false;
+		var _this = this;
+		setTimeout(function() {
+			_this.superDotX = Math.floor(Math.random() * _this.dotsX);
+			_this.superDotY = Math.floor(Math.random() * _this.dotsY);
+		}, 10000);
+		return 2;
+	}
 	if(this.dots[x][y]) {
 		this.dots[x][y] = false;
-		return true;
+		return 1;
 	}
-	return false;
+	return 0;
 };
 
