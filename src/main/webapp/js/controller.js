@@ -19,13 +19,13 @@ function handleEvent(e) {
 	e.preventDefault();
 	var offset = $(dpad).offset();
 	var size = $(dpad).width();
+	var x, y;
 	if(e.touches) {
-		var x = e.touches[0].pageX - offset.left;
-		var y = e.touches[0].pageY - offset.top;
-		
+		x = e.touches[0].pageX - offset.left;
+		y = e.touches[0].pageY - offset.top;
 	} else {
-		var x = e.pageX - offset.left;
-		var y = e.pageY - offset.top;
+		x = e.pageX - offset.left;
+		y = e.pageY - offset.top;
 	}
 	if(x > y) {
 		if(x + y < size) {

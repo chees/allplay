@@ -12,11 +12,19 @@ function Player(engine, id) {
 	this.b = Math.floor(Math.random()*256);
 	this.score = 0;
 	this.isSuper = false; // isSuper is true when the player ate a super dot
+	this.isDead = false;
 }
 Player.prototype = new Entity();
 Player.prototype.constructor = Player;
 
 Player.prototype.update = function() {
+	if(this.isDead) {
+		// TODO animation?
+		this.removeFromWorld = true;
+		Entity.prototype.update.call(this);
+		return;
+	}
+	
 	var d = this.engine.clockTick * this.speed;
 	var gridPos = game.grid.coordsToGrid(this.x, this.y);
 	
@@ -36,6 +44,10 @@ Player.prototype.update = function() {
 			_this.isSuper = false;
 			_this.speed = 100;
 		}, 5000);
+	}
+	
+	if(this.isSuper) {
+		this.eatPlayers();
 	}
 	
 	// TODO simplify and unduplicate this?
@@ -90,6 +102,20 @@ Player.prototype.update = function() {
 	}
 	
 	Entity.prototype.update.call(this);
+};
+
+Player.prototype.eatPlayers = function() {
+	var entitiesCount = this.engine.entities.length;
+	for (var i = 0; i < entitiesCount; i++) {
+		var player = this.engine.entities[i];
+		if(player != this) {
+			if(distance(this.x, this.y, player.x, player.y) < this.radius) {
+				this.score += player.score;
+				player.score = 0;
+				player.isDead = true;
+			}
+		}
+	}
 };
 
 Player.prototype.draw = function(ctx) {
